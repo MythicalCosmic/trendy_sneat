@@ -9,6 +9,11 @@ export const routes = [
         component: () => import('@/pages/dashboard.vue'),
         meta: { requiresAuth: true }
       },
+      {
+        path: 'users',
+        component: () => import('@/pages/users.vue'),
+        meta: { requiresAuth: true }
+      },
     ],
   },
   {
@@ -18,10 +23,6 @@ export const routes = [
       {
         path: 'login',
         component: () => import('@/pages/login.vue'),
-      },
-      {
-        path: 'register',
-        component: () => import('@/pages/register.vue'),
       },
       {
         path: '/:pathMatch(.*)*',

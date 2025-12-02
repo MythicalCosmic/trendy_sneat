@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@floating-ui/dom": "1.6.8",
+    "@mdi/js": "^7.4.47",
     "@stylistic/stylelint-config": "^1.0.1",
     "@vueuse/core": "^10.11.1",
     "@vueuse/math": "^10.11.1",
@@ -43,6 +44,7 @@
     "@iconify/tools": "^4.0.7",
     "@iconify/utils": "^2.1.13",
     "@iconify/vue": "4.1.2",
+    "@mdi/font": "^7.4.47",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitejs/plugin-vue-jsx": "^4.1.1",
     "boxicons": "^2.1.4",
@@ -57,6 +59,7 @@
     "eslint-plugin-sonarjs": "^0.24.0",
     "eslint-plugin-unicorn": "^51.0.1",
     "eslint-plugin-vue": "^9.32.0",
+    "material-design-icons-iconfont": "^6.7.0",
     "postcss-html": "^1.7.0",
     "postcss-scss": "^4.0.9",
     "sass": "~1.76.0",

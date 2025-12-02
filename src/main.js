@@ -3,6 +3,8 @@ import App from '@/App.vue'
 import { registerPlugins } from '@core/utils/plugins'
 import Toast from 'vue-toastification'
 import { toastOptions } from '@/plugins/api/toast'
+import '@mdi/font/css/materialdesignicons.css'
+
 
 // Styles
 import '@core/scss/template/index.scss'

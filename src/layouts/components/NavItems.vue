@@ -9,8 +9,6 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
   <VerticalNavGroup
     :item="{
       title: 'Dashboards',
-      badgeContent: '5',
-      badgeClass: 'bg-error',
       icon: 'bx-home-smile',
     }"
   >
@@ -28,4 +26,12 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
       heading: 'Apps & Pages',
     }"
   />
+   <VerticalNavLink
+    :item="{
+      title: 'Users',
+      icon: 'bx-user',
+      to: '/users',
+    }"
+  />
+
 </template>
