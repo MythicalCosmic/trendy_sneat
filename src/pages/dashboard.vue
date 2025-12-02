@@ -1,153 +1,98 @@
 <script setup>
-import AnalyticsCongratulations from '@/views/dashboard/AnalyticsCongratulations.vue'
-import AnalyticsFinanceTabs from '@/views/dashboard/AnalyticsFinanceTab.vue'
-import AnalyticsOrderStatistics from '@/views/dashboard/AnalyticsOrderStatistics.vue'
-import AnalyticsProfitReport from '@/views/dashboard/AnalyticsProfitReport.vue'
-import AnalyticsTotalRevenue from '@/views/dashboard/AnalyticsTotalRevenue.vue'
-import AnalyticsTransactions from '@/views/dashboard/AnalyticsTransactions.vue'
+import { ref, onMounted } from 'vue'
+import { useToast } from 'vue-toastification'
+import api from '@/plugins/api/axios'
+import DashboardStats from '@/components/dashboard/DashboardStats.vue'
+import RevenueChart from '@/components/dashboard/RevenueChart.vue'
+import TopServices from '@/components/dashboard/TopServices.vue'
+import RecentOrders from '@/components/dashboard/RecentOrders.vue'
+import OrdersByStatus from '@/components/dashboard/OrdersByStatus.vue'
 
-// 👉 Images
-import chart from '@images/cards/chart-success.png'
-import card from '@images/cards/credit-card-primary.png'
-import paypal from '@images/cards/paypal-error.png'
-import wallet from '@images/cards/wallet-info.png'
+const toast = useToast()
+const isLoading = ref(true)
+const dashboardData = ref(null)
+const analytics = ref(null)
+const topServices = ref([])
+const recentOrders = ref([])
+
+const fetchDashboardData = async () => {
+  try {
+    isLoading.value = true
+
+    // Fetch all dashboard data in parallel
+    const [statsRes, analyticsRes, servicesRes, ordersRes] = await Promise.all([
+      api.get('/api-admin/orders/dashboard-stats'),
+      api.get('/api-admin/orders/analytics'),
+      api.get('/api-admin/orders/top-services'),
+      api.get('/api-admin/orders/recent')
+    ])
+
+    dashboardData.value = statsRes.data.data
+    analytics.value = analyticsRes.data.data
+    topServices.value = servicesRes.data.data
+    recentOrders.value = ordersRes.data.data
+
+  } catch (error) {
+    console.error('Error fetching dashboard data:', error)
+    toast.error('Failed to load dashboard data', {
+      position: 'top-right',
+    })
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchDashboardData()
+})
 </script>
 
 <template>
-  <VRow>
-    <!-- 👉 Congratulations -->
-    <VCol
-      cols="12"
-      md="8"
-    >
-      <AnalyticsCongratulations />
-    </VCol>
+  <div>
+    <!-- Loading State -->
+    <div v-if="isLoading" class="d-flex justify-center align-center" style="min-height: 400px;">
+      <VProgressCircular
+        indeterminate
+        color="primary"
+        size="64"
+      />
+    </div>
 
-    <VCol
-      cols="12"
-      sm="4"
-    >
-      <VRow>
-        <!-- 👉 Profit -->
-        <VCol
-          cols="12"
-          md="6"
-        >
-          <CardStatisticsVertical
-            v-bind="{
-              title: 'Profit',
-              image: chart,
-              stats: '$12,628',
-              change: 72.80,
-            }"
-          />
-        </VCol>
+    <!-- Dashboard Content -->
+    <VRow v-else>
+      <!-- Stats Cards -->
+      <VCol cols="12">
+        <DashboardStats 
+          v-if="dashboardData"
+          :data="dashboardData" 
+        />
+      </VCol>
 
-        <!-- 👉 Sales -->
-        <VCol
-          cols="12"
-          md="6"
-        >
-          <CardStatisticsVertical
-            v-bind="{
-              title: 'Sales',
-              image: wallet,
-              stats: '$4,679',
-              change: 28.42,
-            }"
-          />
-        </VCol>
-      </VRow>
-    </VCol>
+      <!-- Revenue Chart -->
+      <VCol cols="12" md="8">
+        <RevenueChart 
+          v-if="dashboardData"
+          :data="dashboardData"
+        />
+      </VCol>
 
-    <!-- 👉 Total Revenue -->
-    <VCol
-      cols="12"
-      md="8"
-      order="2"
-      order-md="1"
-    >
-      <AnalyticsTotalRevenue />
-    </VCol>
+      <!-- Orders by Status -->
+      <VCol cols="12" md="4">
+        <OrdersByStatus 
+          v-if="dashboardData"
+          :data="dashboardData.by_status"
+        />
+      </VCol>
 
-    <VCol
-      cols="12"
-      sm="8"
-      md="4"
-      order="1"
-      order-md="2"
-    >
-      <VRow>
-        <!-- 👉 Payments -->
-        <VCol
-          cols="12"
-          sm="6"
-        >
-          <CardStatisticsVertical
-            v-bind=" {
-              title: 'Payments',
-              image: paypal,
-              stats: '$2,468',
-              change: -14.82,
-            }"
-          />
-        </VCol>
+      <!-- Top Services -->
+      <VCol cols="12" md="6">
+        <TopServices :services="topServices" />
+      </VCol>
 
-        <!-- 👉 Revenue -->
-        <VCol
-          cols="12"
-          sm="6"
-        >
-          <CardStatisticsVertical
-            v-bind="{
-              title: 'Transactions',
-              image: card,
-              stats: '$14,857',
-              change: 28.14,
-            }"
-          />
-        </VCol>
-      </VRow>
-
-      <VRow>
-        <!-- 👉 Profit Report -->
-        <VCol
-          cols="12"
-          sm="12"
-        >
-          <AnalyticsProfitReport />
-        </VCol>
-      </VRow>
-    </VCol>
-
-    <!-- 👉 Order Statistics -->
-    <VCol
-      cols="12"
-      md="4"
-      sm="6"
-      order="3"
-    >
-      <AnalyticsOrderStatistics />
-    </VCol>
-
-    <!-- 👉 Tabs chart -->
-    <VCol
-      cols="12"
-      md="4"
-      sm="6"
-      order="3"
-    >
-      <AnalyticsFinanceTabs />
-    </VCol>
-
-    <!-- 👉 Transactions -->
-    <VCol
-      cols="12"
-      md="4"
-      sm="6"
-      order="3"
-    >
-      <AnalyticsTransactions />
-    </VCol>
-  </VRow>
+      <!-- Recent Orders -->
+      <VCol cols="12" md="6">
+        <RecentOrders :orders="recentOrders" />
+      </VCol>
+    </VRow>
+  </div>
 </template>
