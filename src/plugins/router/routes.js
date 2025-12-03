@@ -18,6 +18,11 @@ export const routes = [
         path: 'categories',
         component: () => import('@/pages/category.vue')
       },
+      {
+        path: 'suppliers',
+        component: () => import('@/pages/suppliers.vue'),
+        meta: { requiresAuth: true }
+      },
     ],
   },
   {
