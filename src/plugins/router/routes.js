@@ -23,6 +23,11 @@ export const routes = [
         component: () => import('@/pages/suppliers.vue'),
         meta: { requiresAuth: true }
       },
+      {
+        path: 'services',
+        component: () => import('@/pages/services.vue'),
+        meta: { requiresAuth: true }
+      }
     ],
   },
   {

@@ -163,7 +163,6 @@ const updateSupplier = async () => {
     Object.assign(selectedSupplier.value, form.value)
     editDialog.value = false
     resetForm()
-
     toast.success('Supplier updated successfully! 🎉', {
       position: 'top-right',
     })

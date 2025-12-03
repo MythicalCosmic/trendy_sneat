@@ -705,6 +705,7 @@ const getStatusIcon = (status) => {
                   variant="outlined"
                   density="comfortable"
                   placeholder="e.g., social-media"
+                  required
                 />
               </VCol>
 
@@ -715,6 +716,7 @@ const getStatusIcon = (status) => {
                   prepend-inner-icon="bx-detail"
                   variant="outlined"
                   density="comfortable"
+                  aria-required=""
                   rows="3"
                   placeholder="Brief description of this category..."
                 />

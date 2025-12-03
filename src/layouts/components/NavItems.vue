@@ -47,5 +47,12 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
       to: '/suppliers',
     }"
   />
+   <VerticalNavLink
+    :item="{
+      title: 'Services',
+      icon: 'bx bx-package',
+      to: '/services',
+    }"
+  />
 
 </template>
