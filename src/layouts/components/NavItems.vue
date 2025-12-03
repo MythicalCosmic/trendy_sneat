@@ -33,5 +33,12 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
       to: '/users',
     }"
   />
+  <VerticalNavLink
+    :item="{
+      title: 'Categories',
+      icon: 'bx-category',
+      to: '/categories',
+    }"
+  />
 
 </template>

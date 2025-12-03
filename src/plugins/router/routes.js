@@ -14,6 +14,10 @@ export const routes = [
         component: () => import('@/pages/users.vue'),
         meta: { requiresAuth: true }
       },
+      {
+        path: 'categories',
+        component: () => import('@/pages/category.vue')
+      },
     ],
   },
   {
