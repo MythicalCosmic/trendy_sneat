@@ -54,5 +54,12 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
       to: '/services',
     }"
   />
+  <VerticalNavLink
+    :item="{
+      title: 'Orders',
+      icon: 'bx bx-receipt',
+      to: '/orders',
+    }"
+  />
 
 </template>
